@@ -13,6 +13,10 @@ function update(userid, event) {
         console.log("성공",res);
         location.href=`/user/${userid}`;
     }).fail(error=>{//httpStatus 상태코드 200번대가 아닐때
-        alert(JSON.stringify(error.responseJSON.data));
+        if(error.data == null){
+            alert(JSON.stringify(error.responseJSON.message));
+        }else{
+            alert(JSON.stringify(error.responseJSON.data));
+        }
     })
 }

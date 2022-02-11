@@ -32,4 +32,8 @@ public class ControllerExceptionHandler {
     public ResponseEntity<?> validationException(CustomValidationApiException e) {
         return new ResponseEntity<>(new CMRespDto(-1, e.getMessage(), e.getErrorMap()), HttpStatus.BAD_REQUEST);
     }
+
+
 }
+
+

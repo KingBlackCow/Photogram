@@ -1,7 +1,7 @@
 package com.cos.photogramstart.service;
 
-import com.cos.photogramstart.domain.User.User;
-import com.cos.photogramstart.domain.User.UserRepository;
+import com.cos.photogramstart.domain.user.User;
+import com.cos.photogramstart.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;

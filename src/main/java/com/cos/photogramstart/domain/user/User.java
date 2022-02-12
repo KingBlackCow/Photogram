@@ -1,10 +1,9 @@
-package com.cos.photogramstart.domain.User;
+package com.cos.photogramstart.domain.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Controller;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

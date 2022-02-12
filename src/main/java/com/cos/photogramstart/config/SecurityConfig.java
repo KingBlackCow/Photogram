@@ -26,7 +26,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/user/**",
                         "/image/**",
                         "/subscribe/**",
-                        "/comment/**")
+                        "/comment/**",
+                        "/api/**")
                 .authenticated()
                 .anyRequest().permitAll()
                 .and()

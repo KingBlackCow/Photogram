@@ -1,6 +1,7 @@
 package com.cos.photogramstart.handler;
 
 import com.cos.photogramstart.handler.ex.CustomApiException;
+import com.cos.photogramstart.handler.ex.CustomException;
 import com.cos.photogramstart.handler.ex.CustomValidationApiException;
 import com.cos.photogramstart.handler.ex.CustomValidationException;
 import com.cos.photogramstart.util.Script;
@@ -23,8 +24,7 @@ public class ControllerExceptionHandler {
         return new CMRespDto(-1, e.getMessage(), e.getErrorMap());
         //return new CMRespDto(-1, e.getMessage(), "문자열을 리턴하고싶을떄는 CMRespDto<Map<String, String>>대신 CMRespDto<String> 으로");
     }
-
-//    @ExceptionHandler(CustomValidationException.class)
+    //    @ExceptionHandler(CustomValidationException.class)
 //    public String validationException(CustomValidationException e) {
 //        return Script.back(e.getErrorMap().toString());
 //    }
@@ -39,7 +39,10 @@ public class ControllerExceptionHandler {
         return new ResponseEntity<>(new CMRespDto(-1, e.getMessage(), null), HttpStatus.BAD_REQUEST);
     }
 
-
+    @ExceptionHandler(CustomException.class)
+    public String exception(CustomException e) {
+        return Script.back(e.getMessage());
+    }
 }
 
 

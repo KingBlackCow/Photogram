@@ -39,7 +39,7 @@ public class User {
 
     // 나는 연관관계의 주인이 아니다. 그러므로 테이블에 칼럼을 만들지마
     // User를 Select 할 때 해당 User id로 등록된 image들을 다가져와
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Image> images;
 
     @PrePersist//디비에 Insert 되기 직전에 실행

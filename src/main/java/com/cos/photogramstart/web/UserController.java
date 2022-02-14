@@ -29,11 +29,11 @@ public class UserController {
     public String update(@PathVariable int id,
                          @AuthenticationPrincipal PrincipalDetails principalDetails){
         //AuthenticationPrincipal 세션정보 쉽게얻는방법
-        System.out.println("세션정보:"+ principalDetails.getUser());
+//        System.out.println("세션정보:"+ principalDetails.getUser());
         // 세션정보 어렵게 얻는 방법
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
-        System.out.println("직접찾은 세션정보: "+mPrincipalDetails.getUser());
+//        System.out.println("직접찾은 세션정보: "+mPrincipalDetails.getUser());
         return "user/update";
     }
 }

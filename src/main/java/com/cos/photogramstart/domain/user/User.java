@@ -1,6 +1,7 @@
 package com.cos.photogramstart.domain.user;
 
 import com.cos.photogramstart.domain.image.Image;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -40,6 +41,7 @@ public class User {
     // 나는 연관관계의 주인이 아니다. 그러므로 테이블에 칼럼을 만들지마
     // User를 Select 할 때 해당 User id로 등록된 image들을 다가져와
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @JsonIgnoreProperties({"user"}) //이미지 클래스 내부의 user를 무시하고 파싱함
     private List<Image> images;
 
     @PrePersist//디비에 Insert 되기 직전에 실행

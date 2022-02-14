@@ -1,5 +1,6 @@
 package com.cos.photogramstart.service;
 
+import com.cos.photogramstart.domain.subscribe.SubscribeRepository;
 import com.cos.photogramstart.domain.user.User;
 import com.cos.photogramstart.domain.user.UserRepository;
 import com.cos.photogramstart.handler.ex.CustomException;
@@ -16,6 +17,7 @@ import javax.transaction.Transactional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final SubscribeRepository subscribeRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public UserProfileDto 회원프로필(int pageUserId, int principalId) {
@@ -29,6 +31,13 @@ public class UserService {
         dto.setUser(userEntity);
         dto.setPageOwnerState(pageUserId == principalId);
         dto.setImageCount(userEntity.getImages().size());
+
+        int subscribeState = subscribeRepository.mSubscribeState(principalId, pageUserId);
+        int subscribeCount = subscribeRepository.mSubscribeCount(pageUserId);
+
+        dto.setSubscribeState(subscribeState == 1);
+        dto.setSubscribeCount(subscribeCount);
+
         return dto;
     }
 
@@ -37,8 +46,8 @@ public class UserService {
         //1. 영속화
 
         User userEntity = userRepository.findById(id).orElseThrow(() -> {
-                    return new CustomValidationApiException("찾을 수 없는 id입니다.");
-                });//1. 무조건 찾았다. 걱정마 get(), 2. 못찾았어 익셉션 발동
+            return new CustomValidationApiException("찾을 수 없는 id입니다.");
+        });//1. 무조건 찾았다. 걱정마 get(), 2. 못찾았어 익셉션 발동
 
         //2. 영속화된 오브젝트를 수정 - 더티체킹(업데이트완료)
         userEntity.setName(user.getName());

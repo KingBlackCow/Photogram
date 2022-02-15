@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -42,9 +43,13 @@ public class SubscribeService {
 				.setParameter(3, pageUserId);
 		
 		// 쿼리 실행 (qlrm 라이브러리 필요 = DTO에 DB결과를 매핑하기 위해서)
-		JpaResultMapper result = new JpaResultMapper();
-		List<SubscribeDto> subscribeDtos =  result.list(query, SubscribeDto.class);
-		
+//		JpaResultMapper result = new JpaResultMapper();
+//		List<SubscribeDto> subscribeDtos =  result.list(query, SubscribeDto.class);
+
+		List<Object[]> results = query.getResultList();
+		List<SubscribeDto> subscribeDtos = results.stream()
+				.map(o -> new SubscribeDto(o))
+				.collect(Collectors.toList());
 		return subscribeDtos;
 	}
 	

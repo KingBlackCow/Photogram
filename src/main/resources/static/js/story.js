@@ -74,17 +74,16 @@ function getStoryItem(image) {
 				</p>`;
 
         if (principalId == comment.user.id) {
-            item += `	<button onclick="deleteComment(${comment.id})">
+            item += `<button onclick="deleteComment(${comment.id})">
 										<i class="fas fa-times"></i>
 									</button>`;
         }
 
         item += `
 			</div>`;
-
-    });
+        });
     item += `
-		</div>
+	</div>
 
 		<div class="sl__item__input">
 			<input type="text" placeholder="댓글 달기..." id="storyCommentInput-${image.id}" />

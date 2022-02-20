@@ -34,14 +34,14 @@ public class UserApiController {
 
     @PutMapping("/api/user/{principalId}/profileImageUrl")
     public ResponseEntity<?> profileImageUrlUpdate(@PathVariable int principalId, MultipartFile profileImageFile,
-                                                   @AuthenticationPrincipal PrincipalDetails principalDetails){
+                                                   @AuthenticationPrincipal PrincipalDetails principalDetails) {
         User userEntity = userService.회원프로필사진변경(principalId, profileImageFile);
         principalDetails.setUser(userEntity); // 세션 변경
         return new ResponseEntity<>(new CMRespDto<>(1, "프로필사진변경 성공", null), HttpStatus.OK);
     }
 
     @GetMapping("/api/user/{pageUserId}/subscribe")
-    public ResponseEntity<?> subscribeList(@PathVariable int pageUserId, @AuthenticationPrincipal PrincipalDetails principalDetails){
+    public ResponseEntity<?> subscribeList(@PathVariable int pageUserId, @AuthenticationPrincipal PrincipalDetails principalDetails) {
 
         List<SubscribeDto> subscribeDto = subscribeService.구독리스트(principalDetails.getUser().getId(), pageUserId);
 
@@ -55,18 +55,8 @@ public class UserApiController {
             BindingResult bindingResult,// 꼭 @Valid다음에 적어야함
             @AuthenticationPrincipal PrincipalDetails principalDetails
     ) {
-
-        if (bindingResult.hasErrors()) {
-            Map<String, String> errorMap = new HashMap<>();
-            for (FieldError error : bindingResult.getFieldErrors()) {
-                errorMap.put(error.getField(), error.getDefaultMessage());
-                System.out.println(error.getDefaultMessage());
-            }
-            throw new CustomValidationApiException("유효성검사 실패함", errorMap);
-        } else {
-            User userEntity = userService.회원수정(id, userUpdateDto.toEntity());
-            principalDetails.setUser(userEntity);//회원정보변경후 세션업데이트!
-            return new CMRespDto<>(1, "회원수정완료", userEntity); //응답시에 userEntity의 모든 getter함수가 호출되고JSON으로 파싱하여 응답한다.
-        }
+        User userEntity = userService.회원수정(id, userUpdateDto.toEntity());
+        principalDetails.setUser(userEntity);//회원정보변경후 세션업데이트!
+        return new CMRespDto<>(1, "회원수정완료", userEntity); //응답시에 userEntity의 모든 getter함수가 호출되고JSON으로 파싱하여 응답한다.
     }
 }

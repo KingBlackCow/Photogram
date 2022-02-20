@@ -6,6 +6,8 @@
  (4) 댓글쓰기
  (5) 댓글삭제
  */
+// (0) 현재 로긴한 사용자 아이디
+let principalId = $("#principalId").val();
 
 // (1) 스토리 로드하기
 let page = 0;
@@ -65,25 +67,22 @@ function getStoryItem(image) {
 		</div>
 
 		<div id="storyCommentList-${image.id}">`;
+        image.comments.forEach((comment) => {
+        item += `<div class="sl__item__contents__comment" id="storyCommentItem-${comment.id}">
+				<p>
+					<b>${comment.user.username} :</b> ${comment.content}
+				</p>`;
 
-    //     image.comments.forEach((comment) => {
-    //     item += `<div class="sl__item__contents__comment" id="storyCommentItem-${comment.id}">
-	// 			<p>
-	// 				<b>${comment.user.username} :</b> ${comment.content}
-	// 			</p>`;
-    //
-    //     if (principalId == comment.user.id) {
-    //         item += `	<button onclick="deleteComment(${comment.id})">
-	// 									<i class="fas fa-times"></i>
-	// 								</button>`;
-    //     }
-    //
-    //     item += `
-	// 		</div>`;
-    //
-    // });
+        if (principalId == comment.user.id) {
+            item += `	<button onclick="deleteComment(${comment.id})">
+										<i class="fas fa-times"></i>
+									</button>`;
+        }
 
+        item += `
+			</div>`;
 
+    });
     item += `
 		</div>
 
@@ -188,8 +187,6 @@ function addComment(imageId) {
         console.log("오류", error.responseJSON.data.content);
         alert(error.responseJSON.data.content);
     });
-
-    commentList.prepend(content);
     commentInput.val("");
 }
 

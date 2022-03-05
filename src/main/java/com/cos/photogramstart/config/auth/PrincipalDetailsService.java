@@ -18,12 +18,12 @@ public class PrincipalDetailsService implements UserDetailsService {
     // 2. 리턴이 잘돼면 자동으로 UserDetails 타입을 세션에 저장됨
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User userEntity = userRepository.findByUsername(username);
-        if(userEntity ==null){
+        User user = userRepository.findByUsername(username);
+        if(user ==null){
             return null;
         }else{
             //세션에 저장
-            return new PrincipalDetails(userEntity);
+            return new PrincipalDetails(user);
         }
     }
 }
